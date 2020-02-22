@@ -1,10 +1,12 @@
+#pragma once
 #include <iostream>
 #include <math.h>
 #include <stdlib.h>
 
 namespace porto
 {
-	class Vec3 {
+	class Vec3
+	{
 	public:
 		union
 		{

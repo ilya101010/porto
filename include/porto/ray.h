@@ -1,6 +1,5 @@
 #pragma once
-//#include <porto/vec3.h>
-#include "vec3.h"
+#include <porto/vec3.h>
 
 namespace porto
 {
