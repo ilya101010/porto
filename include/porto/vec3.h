@@ -26,8 +26,9 @@ namespace porto
 		};
 
 		// initializer
-		Vec3() : x{0}, y{0}, z{0} {}
-		Vec3(float e0, float e1, float e2) : x{e0}, y{e1}, z{e2} {}
+		explicit Vec3() : x{0}, y{0}, z{0} {}
+		explicit Vec3(float e0, float e1, float e2) : x{e0}, y{e1}, z{e2} {}
+		Vec3(const Vec3 &v) : x{v.x}, y{v.y}, z{v.z} {}
 
 		inline const Vec3& operator+() const { return *this; }
 		inline Vec3 operator-() const { return Vec3(-e[0], -e[1], -e[2]); }

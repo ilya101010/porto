@@ -5,14 +5,14 @@ namespace porto
 {
     class Ray
     {
-        Vec3 src, dir;
+        Vec3 _src, _dir;
     public:
-        Ray(Vec3 source, Vec3 direction) : src{source}, dir{direction} {
-            dir.normalize();
+        Ray(Vec3 source, Vec3 direction) : _src{source}, _dir{direction} {
+            _dir.normalize();
         }
-        Vec3 src() { return src; }
-        Vec3 dir() { return dir; } 
-        Vec3 point_at_parameter(float t) { return src + t*dir; }
-    }
-}
 
+        inline Vec3 src() const { return _src; }
+        inline Vec3 dir() const { return _dir; } 
+        inline Vec3 point_at_parameter(float t) const { return _src + t*_dir; }
+    };
+}
