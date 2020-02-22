@@ -19,9 +19,9 @@ int main()
     int nx = 800;
     int ny = 600;
     std::cout << "P3\n" << nx << " " << ny << "\n255\n";
-    p::Vec3 lower_left_corner(-2.0, -1.0, -1.0);
+    p::Vec3 lower_left_corner(-2.0, -1.5, -1.0);
     p::Vec3 horizontal(4.0, 0.0, 0.0);
-    p::Vec3 vertical(0.0, 2.0, 0.0);
+    p::Vec3 vertical(0.0, 3.0, 0.0);
     p::Vec3 origin(0.0, 0.0, 0.0);
     for(int j = ny-1; j >= 0; j--)
     {
