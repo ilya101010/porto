@@ -2,18 +2,21 @@
 #include <porto/ray.h>
 #include <porto/sphere.h>
 #include <porto/ihittable.h>
+#include <porto/scene.h>
 #include <iostream>
 #include <cfloat>
 namespace p = porto;
 
 const float MAXF = FLT_MAX;
 
-p::Sphere s(0,0,-1,0.5);
+p::Sphere s(0,0,-1,0.5), s1(0.25,0,-1,0.5);
+p::Scene scene;
+
 
 p::Vec3 color(const p::Ray &r)
 {
     p::HitRecord hr;
-    if(s.hit(r, 0, MAXF, hr))
+    if(scene.hit(r, 0, MAXF, hr))
     {
         float t = hr.t;
         return 0.5*p::Vec3(hr.normal.x+1, hr.normal.y+1, hr.normal.z+1);
@@ -26,6 +29,8 @@ int main()
 {
     int nx = 800;
     int ny = 600;
+    scene.add(&s);
+    scene.add(&s1);
     std::cout << "P3\n" << nx << " " << ny << "\n255\n";
     p::Vec3 lower_left_corner(-2.0, -1.5, -1.0);
     p::Vec3 horizontal(4.0, 0.0, 0.0);
