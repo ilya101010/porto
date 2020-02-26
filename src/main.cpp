@@ -9,7 +9,7 @@ namespace p = porto;
 
 const float MAXF = FLT_MAX;
 
-p::Sphere s(0,0,-1,0.5), s1(0.25,0,-1,0.5);
+p::Sphere s(0,0,-1,0.5), s1(0.5,0,-1,0.5);
 p::Scene scene;
 
 
