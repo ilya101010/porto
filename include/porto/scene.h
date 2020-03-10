@@ -1,3 +1,5 @@
+#pragma once
+
 #include <porto/ihittable.h>
 #include <vector>
 

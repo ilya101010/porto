@@ -139,7 +139,6 @@ namespace porto
 
 	inline Vec3& Vec3::operator/=(const float t) {
 		float k = 1.0/t;
-
 		e[0] *= k;
 		e[1] *= k;
 		e[2] *= k;

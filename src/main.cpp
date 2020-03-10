@@ -3,51 +3,37 @@
 #include <porto/sphere.h>
 #include <porto/ihittable.h>
 #include <porto/scene.h>
+#include <porto/camera.h>
 #include <iostream>
 #include <cfloat>
+#include <functional>
+#include <random>
+#include <cstdlib>
+#include <porto/raytracer.h>
 namespace p = porto;
 
-const float MAXF = FLT_MAX;
+p::Sphere s(0,0,-2,1), s1(0,-100.6,-2,100);//, s2(-1,0.4,-0.7,0.7);
 
-p::Sphere s(0,0,-1,0.5), s1(0.5,0,-1,0.5);
-p::Scene scene;
-
-
-p::Vec3 color(const p::Ray &r)
+int main(int argc, char const *argv[])
 {
-    p::HitRecord hr;
-    if(scene.hit(r, 0, MAXF, hr))
-    {
-        float t = hr.t;
-        return 0.5*p::Vec3(hr.normal.x+1, hr.normal.y+1, hr.normal.z+1);
-    }
-    float t = 0.5*(r.dir().y + 1.0);
-    return (1.0-t)*p::Vec3(1.0, 1.0, 1.0) + t*p::Vec3(0.5, 0.7, 1.0);
-}
-
-int main()
-{
-    int nx = 800;
-    int ny = 600;
-    scene.add(&s);
-    scene.add(&s1);
-    std::cout << "P3\n" << nx << " " << ny << "\n255\n";
-    p::Vec3 lower_left_corner(-2.0, -1.5, -1.0);
-    p::Vec3 horizontal(4.0, 0.0, 0.0);
-    p::Vec3 vertical(0.0, 3.0, 0.0);
-    p::Vec3 origin(0.0, 0.0, 0.0);
-    for(int j = ny-1; j >= 0; j--)
-    {
-        for (int i = 0; i<nx; i++)
-        {
-            float u = float(i) / float(nx);
-            float v = float(j) / float(ny);
-            p::Ray r(origin, lower_left_corner + u*horizontal + v*vertical);
-            p::Vec3 col = color(r);
-            int ir = int(255.99*col.r);
-            int ig = int(255.99*col.g);
-            int ib = int(255.99*col.b);
-            std::cout << ir << " " << ig << " " << ib << "\n";
-        }
-    }
+	int nx = 800;
+	int ny = 600;
+	p::Raytracer engine{nx, ny, 90};
+	//engine.scene.add(&s);
+	for(float a = 0; a<5;a++)
+		for(float b = 0; b<5; b++)
+			engine.scene.add(new p::Sphere(float(-5+2*a), float(-5+2*b), -2-(a+b)/2, 0.9f));
+	std::cout << "P3\n" << nx << " " << ny << "\n255\n";
+	//#pragma omp parallel for
+	for(int j = ny-1; j >= 0; j--)
+	{
+		for (int i = 0; i<nx; i++)
+		{
+			p::Vec3 col = engine.getPixel(i, j);
+			int ir = int(255.99*col.r);
+			int ig = int(255.99*col.g);
+			int ib = int(255.99*col.b);
+			std::cout << ir << " " << ig << " " << ib << "\n";
+		}
+	}
 }
