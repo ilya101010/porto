@@ -33,6 +33,7 @@
 ./porto
 
 # Etc
+*.feh
 *.ppm
 *.png
 *.jpeg

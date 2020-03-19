@@ -14,6 +14,8 @@ namespace porto
         Sphere(const Vec3 &center, float radius) : c{center}, r{radius} {}
         Sphere(float x, float y, float z, float radius) : c{x,y,z}, r{radius} {}
 
-        virtual bool hit(const Ray &ray, float t_min, float t_max, HitRecord& record) const; 
+        virtual bool hit(const Ray &ray, float t_min, float t_max, HitRecord& record) const;
+        virtual Sphere* clone() const;
+        ~Sphere() {}
     };
 }
