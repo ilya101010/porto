@@ -1,4 +1,4 @@
-CXX   ?= g++
+CXX   = mpic++
 
 EXE = porto
 CXXFLAGS = -Wno-deprecated-register -O0 -std=c++17 -g -Wall

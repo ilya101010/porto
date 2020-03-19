@@ -28,6 +28,7 @@ porto::Camera::Camera(float vfov, float width, float height)
 
 porto::Ray porto::Camera::getRay(float u, float v) {
     return porto::Ray(origin, lower_left_corner + u*horizontal + v*vertical - origin);
+    // to add diafragma add to origin random number
 }
 
 void porto::Camera::setVfov(float vfov)
