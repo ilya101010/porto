@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 		for(float b = 0; b<5; b++) 
 		{
 			auto sph = p::Sphere(float(-5+2*a), float(-5+2*b), -2-(a+b)/2, 0.9f);
-			engine.scene.add(sph);
+			engine.scene.add(std::make_shared<p::Sphere>(sph));
 		}
 	//#pragma omp parallel for
 
