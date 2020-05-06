@@ -7,7 +7,7 @@ namespace porto
     {
         Vec3 _src, _dir;
     public:
-        Ray(Vec3 source, Vec3 direction) : _src{source}, _dir{direction} {
+        Ray(Vec3 source = Vec3(0,0,0), Vec3 direction = Vec3(1,0,0)) : _src{source}, _dir{direction} {
             _dir.normalize();
         }
 

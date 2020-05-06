@@ -1,22 +1,25 @@
 #include <porto/raytracer.h>
 #include <porto/utility.h>
+#include <porto/ray.h>
 #include <iostream>
-
+#include <porto/material.h>
 
 namespace porto
 {
-	static Vec3 color(const Ray &r, Scene &scene) {
-		//std::cerr << "C" << r.src() << ";" << r.dir();
+	static Vec3 color(const Ray &r, Scene &scene, int depth = 10) {
+		if(depth == 0)
+			return Vec3(0,0,0);
 		HitRecord hr;
 		if(scene.hit(r, 0.0001, infinity, hr)) {
-			Vec3 target = hr.p + hr.normal;// + random_in_unit_sphere();
-			return 0.8 * color(Ray(hr.p, target - hr.p), scene);
+			Ray scattered;
+			Vec3 attenuation;
+	        if (hr.mat_ptr->scatter(r, hr, attenuation, scattered))
+	            return attenuation * color(scattered, scene, depth-1);
+	        return Vec3(0,0,0);
 		}
-		else {
-			Vec3 unit_direction = r.dir();
-			double t = 0.5*(unit_direction.y + 1.0);
-			return (1.0-t)*Vec3(1.0, 1.0, 1.0) + t*Vec3(0.5, 0.7, 1.0);
-		}
+		Vec3 unit_direction = r.dir();
+		double t = 0.5*(unit_direction.y + 1.0);
+		return (1.0-t)*Vec3(1.0, 1.0, 1.0) + t*Vec3(0.5, 0.7, 1.0);
 		//std::cerr << "CEnd";
 	}
 

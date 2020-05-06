@@ -18,7 +18,7 @@ namespace porto
 
 		inline void set_face_normal(const Ray& r, const Vec3& out_normal) {
 			front_face = dot(r.dir(), out_normal) < 0;
-			normal = front_face ? out_normal :-out_normal;
+			normal = front_face ? out_normal : -out_normal;
 		}
 	};
 

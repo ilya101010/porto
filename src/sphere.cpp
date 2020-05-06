@@ -31,5 +31,6 @@ bool porto::Sphere::hit
 	record.t = t;
 	record.p = ray.point_at_parameter(record.t);
 	record.normal = (record.p - c) / r;
+	record.mat_ptr = mat_ptr;
 	return true;
 }
