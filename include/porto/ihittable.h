@@ -10,7 +10,7 @@ namespace porto
 	class Material;
 	struct HitRecord
 	{
-		float t;
+		double t;
 		Vec3 p;
 		Vec3 normal;
 		std::shared_ptr<Material> mat_ptr;
@@ -26,7 +26,7 @@ namespace porto
 	{
 	public:
 		virtual bool hit
-			(const Ray &ray, float t_min, float t_max, HitRecord& record) const = 0;
+			(const Ray &ray, double t_min, double t_max, HitRecord& record) const = 0;
 		virtual IHittable* clone() const = 0;
 		virtual ~IHittable() {};
 	};

@@ -10,17 +10,17 @@ namespace porto
 		Vec3 lower_left_corner;
 		Vec3 horizontal;
 		Vec3 vertical;
-		float vfov, aspect;
-		void setup(float vfov, float aspect);
+		double vfov, aspect;
+		void setup(double vfov, double aspect);
 
 	public:
 		Camera();
-		Camera(float vfov, float aspect);
-		Camera(float vfov, float width, float height);
-		Ray getRay(float u, float v);
-		void setVfov(float vfov);
-		float getVfov();
-		void setAspect(float aspect);
-		float getAspect();
+		Camera(double vfov, double aspect);
+		Camera(double vfov, double width, double height);
+		Ray getRay(double u, double v);
+		void setVfov(double vfov);
+		double getVfov();
+		void setAspect(double aspect);
+		double getAspect();
 	};
 }

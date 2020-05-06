@@ -11,12 +11,12 @@ namespace porto
     {
     public:
         Vec3 c;
-        float r;
+        double r;
 
-        Sphere(const Vec3 &center, float radius) : c{center}, r{radius} {}
-        Sphere(float x, float y, float z, float radius) : c{x,y,z}, r{radius} {}
+        Sphere(const Vec3 &center, double radius) : c{center}, r{radius} {}
+        Sphere(double x, double y, double z, double radius) : c{x,y,z}, r{radius} {}
 
-        virtual bool hit(const Ray &ray, float t_min, float t_max, HitRecord& record) const;
+        virtual bool hit(const Ray &ray, double t_min, double t_max, HitRecord& record) const;
         virtual Sphere* clone() const;
         ~Sphere() {}
     };

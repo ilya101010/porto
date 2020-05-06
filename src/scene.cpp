@@ -16,7 +16,7 @@ porto::Scene* porto::Scene::clone() const
 }
 
 bool porto::Scene::hit
-    (const Ray &ray, float t_min, float t_max, HitRecord& record) const
+    (const Ray &ray, double t_min, double t_max, HitRecord& record) const
 {
     // TODO: BVH
     bool hitAnything = false;

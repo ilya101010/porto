@@ -5,7 +5,6 @@
 #include <porto/scene.h>
 #include <porto/camera.h>
 #include <iostream>
-#include <cfloat>
 #include <functional>
 #include <random>
 #include <cstdlib>
@@ -17,7 +16,7 @@ namespace p = porto;
 
 p::Sphere s(0,0,-2,1), s1(0,-100.6,-2,100);//, s2(-1,0.4,-0.7,0.7);
 
-void fun(p::Raytracer& engine, float* arr, int start, int count, int nx){
+void fun(p::Raytracer& engine, double* arr, int start, int count, int nx){
 	for (int j = start, ind = 0; j < start + count; ++j)
 		{
 			for (int i = 0; i < nx; ++i)
@@ -47,10 +46,10 @@ int main(int argc, char *argv[])
 	int ny = 500;
 	p::Raytracer engine{nx, ny, 90};
 	//engine.scene.add(&s);
-	for(float a = 0; a<5;a++)
-		for(float b = 0; b<5; b++) 
+	for(double a = 0; a<5;a++)
+		for(double b = 0; b<5; b++) 
 		{
-			auto sph = p::Sphere(float(-5+2*a), float(-5+2*b), -2-(a+b)/2, 0.9f);
+			auto sph = p::Sphere(double(-5+2*a), double(-5+2*b), -2-(a+b)/2, 0.9f);
 			engine.scene.add(std::make_shared<p::Sphere>(sph));
 		}
 	//#pragma omp parallel for
@@ -61,7 +60,7 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "I'm root, commSize is %d\n", commSize);
 		std::cout << "P3\n" << nx << " " << ny << "\n255\n";
 		MPI_Status status;
-		float * arr = new float [nx * ny * 3] {};
+		double * arr = new double [nx * ny * 3] {};
 		int partSize = ny/commSize;
 		int shift = ny%commSize;
 		for (int i = root+1; i < commSize; ++i) 
@@ -100,7 +99,7 @@ int main(int argc, char *argv[])
 		//fprintf(stderr, "I'm %d, start is %d, count is %d\n", rank, msg[0], msg[1]);
 		int start = msg[0];
 		int count = msg[1];
-		float* arr = new float[count * nx * 3];
+		double* arr = new double[count * nx * 3];
 		fun(engine, arr, start, count, nx);
 		MPI_Send(arr, count * nx * 3, MPI_FLOAT, root, Tag, MPI_COMM_WORLD);
 		delete[] arr;

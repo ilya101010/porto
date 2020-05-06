@@ -13,7 +13,7 @@ namespace porto
     public:
         Scene();
         void add(std::shared_ptr<IHittable> object);
-        virtual bool hit(const Ray &ray, float t_min, float t_max, HitRecord& record) const;
+        virtual bool hit(const Ray &ray, double t_min, double t_max, HitRecord& record) const;
         virtual Scene* clone() const;
         ~Scene();
     };

@@ -13,6 +13,6 @@ namespace porto
 
         inline Vec3 src() const { return _src; }
         inline Vec3 dir() const { return _dir; } 
-        inline Vec3 point_at_parameter(float t) const { return _src + t*_dir; }
+        inline Vec3 point_at_parameter(double t) const { return _src + t*_dir; }
     };
 }
