@@ -2,6 +2,8 @@
 #include <porto/vec3.h>
 #include <porto/ray.h>
 #include <porto/ihittable.h>
+#include <porto/material.h>
+
 
 namespace porto
 {

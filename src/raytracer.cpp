@@ -1,5 +1,5 @@
 #include <porto/raytracer.h>
-#include <porto/random.h>
+#include <porto/utility.h>
 #include <cfloat>
 #include <iostream>
 
@@ -7,7 +7,6 @@
 const float MAXF = FLT_MAX;
 namespace porto
 {
-
 	static Vec3 color(const Ray &r, Scene &scene) {
 		//std::cerr << "C" << r.src() << ";" << r.dir();
 		HitRecord hr;

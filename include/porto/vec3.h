@@ -2,6 +2,7 @@
 #include <iostream>
 #include <math.h>
 #include <stdlib.h>
+#include <porto/utility.h>
 
 namespace porto
 {
@@ -148,4 +149,6 @@ namespace porto
 	inline Vec3 normalize(Vec3 v) {
 		return v / v.length();
 	}
+
+	Vec3 random_unit_vector();
 }
