@@ -32,17 +32,21 @@ int main(int argc, char *argv[])
 	const char * out_file_name = "ex.ppm";//picture
 
 	//TRACE
-	//int nx = 700; 
+	//int nx = 700;//we don't need it anymore  
 	//int ny = 700;
 	std::cout<<"\nstill alive #1\n";
-	p::Raytracer engine{1, 1, 1};
+	p::Raytracer engine{500, 500, 90};
+	engine.cam.nx = 500;//crutch, it should be in constructor
+	engine.cam.ny = 500;
 
-	engine.scene = scene;
-	engine.cam = cameras[0];
+	engine.scene = scene;//copying is not good, fix it
+	//engine.cam = cameras[0];//all would be broken if you uncommented this line, fix it
 
 
-	std::cout<<scene.size()<<'\n';
-	std::cout<<engine.scene.size()<<'\n';
-	world.run(engine, out_file_name);
+	std::cout<<scene.size()<<'\n';//check that reading configs is successfull
+	std::cout<<engine.scene.size()<<'\n';//I've just checked that copying is successfull
+	world.run(engine, out_file_name);//run one of pictures, only first camera
 	std::cout<<"\nstill alive #2\n";
+
+	//there are promblems with paralell running cause all streams write some debug info on desctop in the same time
 }

@@ -14,7 +14,7 @@ namespace porto
 {
     using json = nlohmann::json;
 
-    void examples_working_with_json_nothing_more(){
+    /*void examples_working_with_json_nothing_more(){
         json j;
         j.push_back("foo");
         j.push_back(1);
@@ -96,7 +96,7 @@ namespace porto
 
         // delete an entry
         o.erase("foo");
-    }
+    }*/
 
     void write_hard_configs()
     {
@@ -110,7 +110,7 @@ namespace porto
             {"normale", {0, 0, 1}},
             {"nx", 500},
             {"ny", 500},
-            {"vfov", 30}
+            {"vfov", 90}
         };
         world_json["cameras"].push_back(camera_json);
         
