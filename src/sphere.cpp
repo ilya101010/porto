@@ -30,7 +30,9 @@ bool porto::Sphere::hit
 
 	record.t = t;
 	record.p = ray.point_at_parameter(record.t);
-	record.normal = (record.p - c) / r;
+	Vec3 out_normal = (record.p - c) / r;
 	record.mat_ptr = mat_ptr;
+	record.set_face_normal(ray, out_normal);
+
 	return true;
 }

@@ -4,6 +4,7 @@
 #include <porto/ihittable.h>
 #include <porto/material.h>
 #include <memory>
+#include <porto/utility.h>
 
 namespace porto
 {
@@ -17,7 +18,7 @@ namespace porto
 		Sphere(const Vec3 &center, double radius, std::shared_ptr<Material> material_ptr) : c{center}, r{radius}, mat_ptr{material_ptr} {}
 		Sphere(double x, double y, double z, double radius) : c{x,y,z}, r{radius}
 		{
-			mat_ptr = std::make_shared<Lambertian>(Vec3(0.7, 0.3, 0.3));
+			mat_ptr = std::make_shared<Lambertian>(Vec3(random_double(),random_double(),random_double()));
 		}
 
 		virtual bool hit(const Ray &ray, double t_min, double t_max, HitRecord& record) const;
