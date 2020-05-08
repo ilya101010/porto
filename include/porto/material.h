@@ -28,12 +28,4 @@ namespace porto
 	private:
 		Vec3 albedo;
 	};
-
-	class material
-	{
-	public:
-		material();
-		~material();
-		
-	};
 }
