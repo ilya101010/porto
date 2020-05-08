@@ -63,18 +63,26 @@ int main(int argc, char *argv[])
 		double * arr = new double [nx * ny * 3] {};
 		int partSize = ny/commSize;
 		int shift = ny%commSize;
+		int *msg = new int[2* commSize];
+		for (int i = root; i < shift; ++i) {
+			msg[2*i] = (partSize + 1) * i;
+			msg[2*i + 1] = partSize + 1;
+		}
+		for (int i = shift; i < commSize; ++i) {
+			msg[2*i] = partSize * i + shift;
+			msg[2*i + 1] = partSize;
+		}
 		for (int i = root+1; i < commSize; ++i) 
 		{
-			int msg[2] {shift + partSize*i, partSize};
-			fprintf(stderr, "I'm root, send to %d start %d count %d\n", i, msg[0], msg[1]);
-			MPI_Send(msg, 2, MPI_INT, i, Tag, MPI_COMM_WORLD);
+			fprintf(stderr, "I'm root, send to %d start %d count %d\n", i, msg[2*i], msg[2*i+1]);
+			MPI_Send(msg + 2*i, 2, MPI_INT, i, Tag, MPI_COMM_WORLD);
 		}
 		//TRACE
-		fun(engine, arr, 0, partSize + shift, nx);
+		fun(engine, arr, msg[0], msg[1], nx);
 
 		for (int i = root+1; i < commSize; ++i) 
 		{
-			MPI_Recv(arr + (shift + partSize*i) * nx * 3, partSize * nx * 3, MPI_DOUBLE, i, Tag, MPI_COMM_WORLD, &status);
+			MPI_Recv(arr + msg[2*i] * nx * 3, msg[2*i+1] * nx * 3, MPI_DOUBLE, i, Tag, MPI_COMM_WORLD, &status);
 		}
 
 		for(int j = ny-1; j >= 0; j--)
