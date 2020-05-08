@@ -70,11 +70,11 @@ int main(int argc, char *argv[])
 			MPI_Send(msg, 2, MPI_INT, i, Tag, MPI_COMM_WORLD);
 		}
 		//TRACE
-		fun(engine, arr, 0, partSize, nx);
+		fun(engine, arr, 0, partSize + shift, nx);
 
 		for (int i = root+1; i < commSize; ++i) 
 		{
-			MPI_Recv(arr + (shift + partSize*i) * nx * 3, partSize * nx * 3, MPI_FLOAT, i, Tag, MPI_COMM_WORLD, &status);
+			MPI_Recv(arr + (shift + partSize*i) * nx * 3, partSize * nx * 3, MPI_DOUBLE, i, Tag, MPI_COMM_WORLD, &status);
 		}
 
 		for(int j = ny-1; j >= 0; j--)
@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
 		int count = msg[1];
 		double* arr = new double[count * nx * 3];
 		fun(engine, arr, start, count, nx);
-		MPI_Send(arr, count * nx * 3, MPI_FLOAT, root, Tag, MPI_COMM_WORLD);
+		MPI_Send(arr, count * nx * 3, MPI_DOUBLE, root, Tag, MPI_COMM_WORLD);
 		delete[] arr;
 	}
 
