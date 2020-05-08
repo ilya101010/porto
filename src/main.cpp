@@ -13,27 +13,36 @@
 #include <cstdio>
 #include <unistd.h>
 #include <porto/mpi_unit.h>
+#include <json.hpp>
+#include <porto/config_io.h>
 namespace p = porto;
 
-p::Sphere s(0,0,-2,1), s1(0,-100.6,-2,100);//, s2(-1,0.4,-0.7,0.7);
+using json = nlohmann::json;
 
 int main(int argc, char *argv[])
 {
-	//MPI
 	p::MPI_unit world(argc, argv);
-	const char * out_file_name = "ex.ppm";
+	p::write_hard_configs();//writing hardcoded configs to conf.json
+	std::vector< p::Camera> cameras;//list of cameras to make more than one picture with same scene //haven't done
+	p::Scene scene;//scene to read from json
+	p::read_configs(cameras, scene);//reading configs from json
+	
+
+
+	const char * out_file_name = "ex.ppm";//picture
 
 	//TRACE
-	int nx = 600;
-	int ny = 600;
-	p::Raytracer engine{nx, ny, 90};
-	//engine.scene.add(&s);
-	for(double a = 0; a<5;a++)
-		for(double b = 0; b<5; b++) 
-		{
-			auto sph = p::Sphere(double(-5+2*a), double(-5+2*b), -2-(a+b)/2, 0.9f);
-			engine.scene.add(std::make_shared<p::Sphere>(sph));
-		}
-	//#pragma omp parallel for
-	world.run(engine, nx, ny, out_file_name);
+	//int nx = 700; 
+	//int ny = 700;
+	std::cout<<"\nstill alive #1\n";
+	p::Raytracer engine{1, 1, 1};
+
+	engine.scene = scene;
+	engine.cam = cameras[0];
+
+
+	std::cout<<scene.size()<<'\n';
+	std::cout<<engine.scene.size()<<'\n';
+	world.run(engine, out_file_name);
+	std::cout<<"\nstill alive #2\n";
 }

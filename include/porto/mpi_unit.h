@@ -49,8 +49,11 @@ namespace porto {
             }
             out.close();
         }
-        void run(Raytracer & engine, int nx, int ny, const char * filename)
+        void run(Raytracer & engine, const char * filename)
         {
+            int nx = engine.cam.getnx();
+            int ny = engine.cam.getny();
+            
             if (rank == root)
             {
                 //MPI root

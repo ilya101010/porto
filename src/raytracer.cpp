@@ -33,7 +33,7 @@ namespace porto
 
 	Vec3 Raytracer::getPixel(int x, int y)
 	{
-		int ns = 30;
+		int ns = 100;
 		Vec3 col(0, 0, 0);
 		for (int s = 0; s < ns; s++) {
 			double u = double(x + random_double()) / double(width);

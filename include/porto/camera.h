@@ -14,6 +14,9 @@ namespace porto
 		void setup(double vfov, double aspect);
 
 	public:
+		int nx, ny;
+		int getnx() {return nx;}
+		int getny() {return ny;}
 		Camera();
 		Camera(double vfov, double aspect);
 		Camera(double vfov, double width, double height);
