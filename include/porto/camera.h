@@ -12,14 +12,15 @@ namespace porto
 		Vec3 vertical;
 		double vfov, aspect;
 		void setup(double vfov, double aspect);
+		int nx, ny;
+		//std::string filename;
 
 	public:
-		int nx, ny;
 		int getnx() {return nx;}
 		int getny() {return ny;}
 		Camera();
-		Camera(double vfov, double aspect);
-		Camera(double vfov, double width, double height);
+		Camera(double vfov, double aspect, int nx, int ny);
+		Camera(double vfov, double width, double height, int nx, int ny);
 		Ray getRay(double u, double v);
 		void setVfov(double vfov);
 		double getVfov();

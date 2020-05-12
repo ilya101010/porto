@@ -1,6 +1,7 @@
 #include <porto/scene.h>
 #include <porto/ihittable.h>
 #include <memory>
+#include <iostream>
 
 
 // TODO: WTF

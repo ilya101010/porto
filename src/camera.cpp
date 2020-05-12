@@ -15,12 +15,12 @@ void porto::Camera::setup(double vfov, double aspect)
     this->aspect = aspect;
 }
 
-porto::Camera::Camera(double vfov, double aspect)
+porto::Camera::Camera(double vfov, double aspect, int nx = 1920, int ny = 1080) : nx{nx}, ny{ny}
 {
     setup(vfov, aspect);
 }
 
-porto::Camera::Camera(double vfov, double width, double height)
+porto::Camera::Camera(double vfov, double width, double height, int nx = 1920, int ny = 1080) : nx{nx}, ny{ny}
 {
     double aspect = width / height;
     setup(vfov, aspect);

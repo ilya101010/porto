@@ -3,14 +3,15 @@
 #include <porto/ray.h>
 #include <iostream>
 #include <porto/material.h>
+#include <porto/vec3.h>
 
 namespace porto
 {
-	static Vec3 color(const Ray &r, Scene &scene, int depth = 10) {
+	static Vec3 color(const Ray &r, std::shared_ptr<Scene> &scene, int depth = 10) {
 		if(depth == 0)
 			return Vec3(0,0,0);
 		HitRecord hr;
-		if(scene.hit(r, 0.0001, infinity, hr)) {
+		if(scene->hit(r, 0.0001, infinity, hr)) {
 			Ray scattered;
 			Vec3 attenuation;
 	        if (hr.mat_ptr->scatter(r, hr, attenuation, scattered))
@@ -24,12 +25,17 @@ namespace porto
 	}
 
 	Raytracer::Raytracer(int width, int height, double vfov, Vec3 origin) // todo: origin
-				: cam{vfov, width, height}
+				: cam { std::make_shared<Camera>(vfov, (double) width, (double) height, width, height)}
 	{
 		this->width = width;
 		this->height = height;
 		//cam = Camera(vfov, width, height);
 	}
+	Raytracer::Raytracer(std::shared_ptr<Scene> scene, std::shared_ptr<Camera> cam) : width{cam->getnx()}, height{cam->getny()}
+        {
+            this->scene = scene;
+            this->cam = cam;
+        };
 
 	Vec3 Raytracer::getPixel(int x, int y)
 	{
@@ -38,7 +44,8 @@ namespace porto
 		for (int s = 0; s < ns; s++) {
 			double u = double(x + random_double()) / double(width);
 			double v = double(y + random_double()) / double(height);
-			Ray r = cam.getRay(u, v);
+			Ray r = cam->getRay(u, v);
+			//std::cout<<r.src().r<<' '<<r.src().g<<' '<<r.src().b<<' '<<r.dir().r<<' '<<r.dir().g<<' '<<r.dir().b<<'\n';
 			col += color(r, scene);
 		}
 
