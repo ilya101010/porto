@@ -24,8 +24,11 @@ using json = nlohmann::json;
 int main(int argc, char *argv[])
 {
 	p::MPI_unit world(argc, argv);
-	//if (world.getrank() == 0)
-		//p::write_hard_configs();//writing hardcoded configs to conf.json
+	if (world.getcommSize() == 1){
+		p::write_hard_configs();//writing hardcoded configs to conf.json
+		std::cout<<"configs written";
+		return 0;
+	}
 	//usleep(1000*world.getrank());
 	//std::cout<<"\nconfs written\n";
 	std::vector< std::shared_ptr<p::Camera> > cameras;//list of cameras to make more than one picture with same scene //haven't done

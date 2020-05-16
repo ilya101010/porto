@@ -9,6 +9,9 @@ int porto::MPI_unit::getrank() const
 {
     return rank;
 }
+int porto::MPI_unit::getcommSize() const{
+    return commSize;
+}
 porto::MPI_unit::MPI_unit(int argc, char *argv[])
 {
     MPI_Init(&argc, &argv);
@@ -22,17 +25,17 @@ porto::MPI_unit::~MPI_unit()
 void porto::MPI_unit::fun(Raytracer& engine, double* arr, int start, int count, int nx)
 {
     for (int j = start, ind = 0; j < start + count; ++j)
+    {
+        for (int i = 0; i < nx; ++i)
         {
-            for (int i = 0; i < nx; ++i)
-            {
-                Vec3 col = engine.getPixel(i, j);
-                arr[ind] = col.r;
-                arr[ind + 1] = col.g;
-                arr[ind + 2] = col.b;
-                ind += 3;
-                //std::cout << col.r << " " << col.g << " " << col.b << "\n";
-            }
+            Vec3 col = engine.getPixel(i, j);
+            arr[ind] = col.r;
+            arr[ind + 1] = col.g;
+            arr[ind + 2] = col.b;
+            ind += 3;
+            //std::cout << col.r << " " << col.g << " " << col.b << "\n";
         }
+    }
 }
 void porto::MPI_unit::ppm(const double * arr, const int nx, const int ny, const char * filename)
 {

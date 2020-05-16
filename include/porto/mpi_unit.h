@@ -11,6 +11,7 @@ namespace porto {
         void ppm(const double * arr, const int nx, const int ny, const char * filename);
     public:
         int getrank() const;
+        int getcommSize() const;
         MPI_unit(int argc, char *argv[]);
         ~MPI_unit();
         void run(Raytracer & engine, const char * filename);

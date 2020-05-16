@@ -110,8 +110,8 @@ namespace porto
         json camera_json{
             {"origin", {0, 0, 0}},
             {"normale", {0, 0, 1}},
-            {"nx", 1920},
-            {"ny", 1080},
+            {"nx", 1000},
+            {"ny", 1000},
             {"vfov", 100}
         };
         world_json["cameras"].push_back(camera_json);
