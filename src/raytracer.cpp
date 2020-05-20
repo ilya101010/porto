@@ -24,13 +24,13 @@ namespace porto
 		//std::cerr << "CEnd";
 	}
 
-	Raytracer::Raytracer(int width, int height, double vfov, Vec3 origin) // todo: origin
-				: cam { std::make_shared<Camera>(vfov, (double) width, (double) height, width, height)}
+	/*Raytracer::Raytracer(int width, int height, double vfov, Vec3 origin) // todo: origin
+				: cam { std::make_shared<Camera>(vfov, (double) width, (double) height, width, height, std::string("ex.ppm"))}
 	{
 		this->width = width;
 		this->height = height;
 		//cam = Camera(vfov, width, height);
-	}
+	}*/
 	Raytracer::Raytracer(std::shared_ptr<Scene> scene, std::shared_ptr<Camera> cam) : width{cam->getnx()}, height{cam->getny()}
         {
             this->scene = scene;

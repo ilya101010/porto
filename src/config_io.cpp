@@ -11,6 +11,7 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <porto/material.h>
 
 namespace porto
 {
@@ -100,9 +101,9 @@ namespace porto
         o.erase("foo");
     }*/
 
-    void write_hard_configs()
+    void write_hard_configs(const char * filename)
     {
-        std::ofstream out("conf.json");
+        std::ofstream out(filename);
         json world_json{
             {"cameras", json::array()},
             {"scene", json::array()}
@@ -112,7 +113,8 @@ namespace porto
             {"normale", {0, 0, 1}},
             {"nx", 1000},
             {"ny", 1000},
-            {"vfov", 100}
+            {"vfov", 100},
+            {"cam_filename", "pictures/ex_1.ppm"}
         };
         world_json["cameras"].push_back(camera_json);
         
@@ -120,9 +122,10 @@ namespace porto
             for(double b = 0; b<5; b++) 
             {
                 json sph_i{
-                    {"sphere", 
+                    {"sphere_Lambertian", 
                         {
-                            {"o", {(-5+2*a),(-5+2*b), -2-(a+b)/2}}, 
+                            {"o", {(-5+2*a),(-5+2*b), -2-(a+b)/2}},
+                            {"material", {random_double(),random_double(), random_double()}},
                             {"r", 0.9}
                         }
                     }
@@ -135,9 +138,9 @@ namespace porto
 
     #define EXTRACT(x, J) x = J[#x].get< decltype(x) >()
 
-    void read_configs(std::vector< std::shared_ptr < porto::Camera > > &cameras, std::shared_ptr < Scene > & scene)
+    void read_configs(std::vector< std::shared_ptr < porto::Camera > > &cameras, std::shared_ptr < Scene > & scene, std::istream & in)
     {
-        std::ifstream in("conf.json");
+        //std::ifstream in("conf.json");
         json world_json;
         in >> world_json;
         //std::cout<<world_json;
@@ -147,13 +150,15 @@ namespace porto
     
             std::vector<double> normale, origin;
             double vfov; int nx, ny;
+            std::string cam_filename;
             EXTRACT(vfov, value);
             EXTRACT(nx, value);
             EXTRACT(ny, value);
             EXTRACT(normale, value);
             EXTRACT(origin, value);
+            EXTRACT(cam_filename, value);
             //std::cout << nx << ' ' << ny << ' ' << vfov << '\n';
-            cameras.push_back(std::make_shared<Camera>(vfov, (double) nx, (double) ny, nx, ny));
+            cameras.push_back(std::make_shared<Camera>(vfov, (double) nx, (double) ny, nx, ny, cam_filename));
     
         }
         scene = std::make_shared<Scene>();
@@ -161,21 +166,22 @@ namespace porto
         {
             //std::cout << key << " : " << value << "\n";
             for (auto & it : value.items())
-                if (it.key() == "sphere")
+                if (it.key() == "sphere_Lambertian")
                 {   
-                    std::vector<double> o;
+                    std::vector<double> o, material;
                     double r;
                     EXTRACT(o, it.value());
                     EXTRACT(r, it.value());
+                    EXTRACT(material, it.value());
                     //std::cout<<"shp\n"<< o[0] << ' ' << o[1] << ' ' << o[2] << ' ' << r << '\n';
                     //auto sph = std::make_shared<Sphere>(o[0], o[1], o[2], r);
                     //std::cout << "still alive\n";
-                    scene->add(std::make_shared<Sphere>(o[0], o[1], o[2], r));
+                    scene->add(std::make_shared<Sphere>(Vec3(o[0], o[1], o[2]), r, std::make_shared<Lambertian>(Vec3(material[0], material[1], material[2]))));
                     //std::cout << "still alive\n";
                     //std::cout << scene->size() << '\n';
                 }
         }
-        in.close();
+        //in.close();
     }
     
 }

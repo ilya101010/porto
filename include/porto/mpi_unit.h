@@ -14,6 +14,6 @@ namespace porto {
         int getcommSize() const;
         MPI_unit(int argc, char *argv[]);
         ~MPI_unit();
-        void run(Raytracer & engine, const char * filename);
+        void run(Raytracer & engine);
     };
 }

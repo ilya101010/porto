@@ -19,18 +19,26 @@
 #include <porto/config_io.h>
 #include <vector>
 
-/*
+
 namespace porto
 {
+    enum{
+        OK, BAD_INPUT
+    };
     class World
     {
         MPI_unit mpi_unit;
-        std::vector < std::shared_ptr < Raytracer > > engines;
+        int status = OK;
+        std::vector < Raytracer >  engines;
         std::vector < std::shared_ptr < Camera > > cameras;
         std::shared_ptr < Scene > scene;
         std::ifstream conf_file;
+    public:
         World(int argc, char *argv[]);
+        ~World();
         int init();
+        int run();
+        int getstatus() const {return status;}
+        int getrank() const {return mpi_unit.getrank();}
     };
 }
-*/

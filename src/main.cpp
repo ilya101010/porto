@@ -23,35 +23,15 @@ using json = nlohmann::json;
 
 int main(int argc, char *argv[])
 {
-	p::MPI_unit world(argc, argv);
-	if (world.getcommSize() == 1){
-		p::write_hard_configs();//writing hardcoded configs to conf.json
-		std::cout<<"configs written";
+	//p::write_hard_configs("configs/conf.json");
+	//return 0;
+	//you should uncomment lines above and comment lines below and (make) and run to make a configs file
+	//then use another part of main
+	p::World boss(argc, argv);
+	if (boss.getstatus()!= p::OK){
+		//if (boss.getrank()==0)
 		return 0;
 	}
-	//usleep(1000*world.getrank());
-	//std::cout<<"\nconfs written\n";
-	std::vector< std::shared_ptr<p::Camera> > cameras;//list of cameras to make more than one picture with same scene //haven't done
-	std::shared_ptr<p::Scene> scene;//scene to read from json
-	p::read_configs(cameras, scene);//reading configs from json
-	
-	const char * out_file_name = "ex.ppm";//picture
-
-	//TRACE
-	//int nx = 700;//we don't need it anymore  
-	//int ny = 700;
-	//std::cout<<"\nstill alive #1\n";
-	p::Raytracer engine{scene, cameras[0]};
-	//std::cout<<"\nstill alive #1_0\n";
-	//engine.scene = scene;//copying is not good, fix it
-	//engine.cam = cameras[0];//all would be broken if you uncommented this line, fix it
- 
-	//std::cout<<scene->size()<<'\n';//check that reading configs is successfull
-	//std::cout<<"\nstill alive #1_1\n";
-	//std::cout<<engine.scene->size()<<'\n';//I've just checked that copying is successfull
-	//std::cout<<"\nstill alive #1_2\n";
-	world.run(engine, out_file_name);//run one of pictures, only first camera
-	//std::cout<<"\nstill alive #2\n";
-
-	//there are promblems with paralell running cause all streams write some debug info on desctop in the same time
+	boss.init();
+	boss.run();
 }

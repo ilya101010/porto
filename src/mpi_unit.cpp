@@ -55,7 +55,7 @@ void porto::MPI_unit::ppm(const double * arr, const int nx, const int ny, const 
     }
     out.close();
 }
-void porto::MPI_unit::run(Raytracer & engine, const char * filename)
+void porto::MPI_unit::run(Raytracer & engine)
 {
     int nx = engine.cam->getnx();
     int ny = engine.cam->getny();
@@ -98,7 +98,7 @@ void porto::MPI_unit::run(Raytracer & engine, const char * filename)
         }
 
         //PPM
-        ppm(arr, nx, ny, filename);
+        ppm(arr, nx, ny, engine.cam->getfilename().c_str());
         
         delete[] arr;
     }

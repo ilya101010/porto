@@ -14,13 +14,13 @@ void porto::Camera::setup(double vfov, double aspect)
     this->vfov = vfov;
     this->aspect = aspect;
 }
-
-porto::Camera::Camera(double vfov, double aspect, int nx = 1920, int ny = 1080) : nx{nx}, ny{ny}
+/*
+porto::Camera::Camera(double vfov, double aspect, int nx = 1920, int ny = 1080, std::string filename = std::string("ex.ppm")) : nx{nx}, ny{ny}, filename{filename}
 {
     setup(vfov, aspect);
-}
+}*/
 
-porto::Camera::Camera(double vfov, double width, double height, int nx = 1920, int ny = 1080) : nx{nx}, ny{ny}
+porto::Camera::Camera(double vfov, double width, double height, int nx = 1920, int ny = 1080, std::string filename = std::string("ex.ppm")) : nx{nx}, ny{ny}, filename{filename}
 {
     double aspect = width / height;
     setup(vfov, aspect);
