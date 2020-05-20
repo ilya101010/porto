@@ -124,7 +124,7 @@ namespace porto
                 json sph_i{
                     {"sphere_Lambertian", 
                         {
-                            {"o", {(-5+2*a),(-5+2*b), -2-(a+b)/2}},
+                            {"o", {(-5+2*a),(-5+2*b), 5 + (a+b)/2}},
                             {"material", {random_double(),random_double(), random_double()}},
                             {"r", 0.9}
                         }

@@ -7,7 +7,7 @@ void porto::Camera::setup(double vfov, double aspect)
     double theta = vfov*M_PI/180;
     double half_height = tan(theta/2);
     double half_width = aspect * half_height;
-    lower_left_corner = Vec3(-half_width, -half_height, -1.0);
+    lower_left_corner = Vec3(-half_width, -half_height, 1.0);
     horizontal = Vec3(2*half_width, 0.0, 0.0);
     vertical = Vec3(0.0, 2*half_height, 0.0);
     origin = Vec3(0.0, 0.0, 0.0);
