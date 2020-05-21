@@ -41,7 +41,7 @@ int porto::World::run()
     for (size_t i=0; i<engines.size(); ++i){
         mpi_unit.run(engines[i]);
         if (getrank()==0)
-            printf("\n\n!!!!!!!!!!!!!\nPicter #%d is Complete\n\nName is %s\n!!!!!!!!!!!!!\n\n", (int)i, engines[i].cam->getfilename().c_str());
+            printf("\n\n!!!!!!!!!!!!!\nPicter #%d is Complete\n\nName is %s\n\n\n", (int)i, engines[i].cam->getfilename().c_str());
     }
     return 0;
 }

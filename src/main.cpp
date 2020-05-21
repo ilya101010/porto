@@ -23,13 +23,8 @@ using json = nlohmann::json;
 
 int main(int argc, char *argv[])
 {
-	//p::write_hard_configs("configs/conf.json");
-	//return 0;
-	//you should uncomment lines above and comment lines below and (make) and run to make a configs file
-	//then use another part of main
 	p::World boss(argc, argv);
 	if (boss.getstatus()!= p::OK){
-		//if (boss.getrank()==0)
 		return 0;
 	}
 	boss.init();

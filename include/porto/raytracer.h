@@ -10,6 +10,7 @@ namespace porto
     {
         int width;
         int height;
+        int ns, depth;
     public:
         std::shared_ptr<Camera> cam;
         std::shared_ptr<Scene> scene;

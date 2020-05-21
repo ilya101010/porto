@@ -4,8 +4,10 @@
 #include <limits>
 #include <fstream>
 #include <cmath>
+#include <string>
 
 using json = nlohmann::json;
+using namespace std;
 
 double random_double(double l=0, double r=1)
 {
@@ -30,7 +32,7 @@ void write_hard_configs(const char * filename)
     };
     {
         json camera_json{
-            {"origin", {0, 0, 0}},
+            {"origin", {0, 0, -10}},
             {"ver", {0, 1, 0}},
             {"hor", {1, 0, 0}},
             {"nx", 500},
@@ -38,18 +40,40 @@ void write_hard_configs(const char * filename)
             {"vfov", 110},
             {"ns", 10},
             {"depth", 10},
-            {"cam_filename", "pictures/make_2_conf_1_2.ppm"}
+            {"cam_filename", (string("pictures/dir_5/make_2_conf_3_")+to_string(1)+string(".ppm"))}
         };
         world_json["cameras"].push_back(camera_json);
     }
-    for(double i=0; i<30; i+=1) 
+    for (int i=1; i<12; ++i)
     {
+        json camera_json{
+            {"origin", {my_random(10, 12), my_random(10, 12), -5}},
+            {"ver", {my_random(-1, 1), my_random(-1, 1), my_random(-1, 1)}},
+            {"hor", {my_random(-1, 1), my_random(-1, 1), my_random(-1, 1)}},
+            {"nx", 500},
+            {"ny", 500},
+            {"vfov", 110},
+            {"ns", 20},
+            {"depth", 10},
+            {"cam_filename", (string("pictures/dir_5/make_2_conf_3_")+to_string(i+1)+string(".ppm"))}
+        };
+        world_json["cameras"].push_back(camera_json);
+    }
+    double z = 0.5, phi = 1, k = 0.5, r = z*z, x, y;
+    for(double i=0; i<100; i+=1) 
+    {
+        r = z*z;
+        phi += k/r;
+        k+=(double)1/10;
+        x = r * sin(phi);
+        y = r * cos(phi);
+        z += (double)1/5/r;
         json sph_i{
             {"sphere_Lambertian", 
                 {
-                    {"o", {(i/4)*(sin(i*20/180*3.1415)) + my_random(-0.1, 0.1) + 1,(i/4)*cos(i*20/180*3.1415) + my_random(-0.1, 0.1), 7 + my_random(-1, 1)}},
+                    {"o", {x + my_random(-0.1,0.1), y + my_random(-0.1,0.1), z + my_random(-0.1,0.1)}},
                     {"material", {my_random(),my_random(), my_random()}},
-                    {"r", sqrt(my_random(0.3, 0.9)*i/6)}
+                    {"r", sqrt(sqrt(my_random(2, 5)))}
                 }
             }
         };
@@ -60,5 +84,5 @@ void write_hard_configs(const char * filename)
 }
 
 int main(){
-    write_hard_configs("make_2_config_1_made.json");
+    write_hard_configs("make_2_config_5_made.json");
 }

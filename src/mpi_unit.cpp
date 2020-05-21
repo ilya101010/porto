@@ -40,7 +40,14 @@ void porto::MPI_unit::fun(Raytracer& engine, double* arr, int start, int count, 
 void porto::MPI_unit::ppm(const double * arr, const int nx, const int ny, const char * filename)
 {
     std::ofstream out(filename);
+    if (!out.is_open())
+    {
+        fprintf(stderr, "\nfile to write couldn't be openned\n");
+        return;
+    }
+
     out << "P3\n" << nx << " " << ny << "\n255\n";//start filling ppm file with configs
+
     for(int j = ny-1; j >= 0; j--)//filling ppm file
     {
         for (int i = 0; i<nx; i++)
@@ -53,6 +60,7 @@ void porto::MPI_unit::ppm(const double * arr, const int nx, const int ny, const 
             //std::cout << ir << " " << ig << " " << ib << "\n";
         }
     }
+
     out.close();
 }
 void porto::MPI_unit::run(Raytracer & engine)

@@ -35,18 +35,19 @@ namespace porto
         {
             this->scene = scene;
             this->cam = cam;
+			ns = cam->getns();
+			depth = cam->getdepth();
         };
 
 	Vec3 Raytracer::getPixel(int x, int y)
 	{
-		int ns = 100;
 		Vec3 col(0, 0, 0);
 		for (int s = 0; s < ns; s++) {
 			double u = double(x + random_double()) / double(width);
 			double v = double(y + random_double()) / double(height);
 			Ray r = cam->getRay(u, v);
 			//std::cout<<r.src().r<<' '<<r.src().g<<' '<<r.src().b<<' '<<r.dir().r<<' '<<r.dir().g<<' '<<r.dir().b<<'\n';
-			col += color(r, scene);
+			col += color(r, scene, depth);
 		}
 
 		#ifdef DEBUG

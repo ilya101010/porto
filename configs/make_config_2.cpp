@@ -4,8 +4,10 @@
 #include <limits>
 #include <fstream>
 #include <cmath>
+#include <string>
 
 using json = nlohmann::json;
+using namespace std;
 
 double random_double(double l=0, double r=1)
 {
@@ -28,28 +30,29 @@ void write_hard_configs(const char * filename)
         {"cameras", json::array()},
         {"scene", json::array()}
     };
+    for (int i=0; i<12; ++i)
     {
         json camera_json{
-            {"origin", {0, 0, 0}},
-            {"ver", {0, 1, 0}},
-            {"hor", {1, 0, 0}},
+            {"origin", {my_random(-30, 30), my_random(-30, 30), my_random(-30, 30)}},
+            {"ver", {my_random(-1, 1), my_random(-1, 1), my_random(-1, 1)}},
+            {"hor", {my_random(-1, 1), my_random(-1, 1), my_random(-1, 1)}},
             {"nx", 500},
             {"ny", 500},
             {"vfov", 110},
-            {"ns", 10},
+            {"ns", 20},
             {"depth", 10},
-            {"cam_filename", "pictures/make_2_conf_1_2.ppm"}
+            {"cam_filename", (string("pictures/dir_3/make_2_conf_3_")+to_string(i+1)+string(".ppm"))}
         };
         world_json["cameras"].push_back(camera_json);
     }
-    for(double i=0; i<30; i+=1) 
+    for(double i=0; i<40; i+=1) 
     {
         json sph_i{
             {"sphere_Lambertian", 
                 {
-                    {"o", {(i/4)*(sin(i*20/180*3.1415)) + my_random(-0.1, 0.1) + 1,(i/4)*cos(i*20/180*3.1415) + my_random(-0.1, 0.1), 7 + my_random(-1, 1)}},
+                    {"o", {my_random(-20, 20), my_random(-20, 20), my_random(-20, 20)}},
                     {"material", {my_random(),my_random(), my_random()}},
-                    {"r", sqrt(my_random(0.3, 0.9)*i/6)}
+                    {"r", sqrt(sqrt(my_random(2, 100)))}
                 }
             }
         };
@@ -60,5 +63,5 @@ void write_hard_configs(const char * filename)
 }
 
 int main(){
-    write_hard_configs("make_2_config_1_made.json");
+    write_hard_configs("make_2_config_3_made.json");
 }
