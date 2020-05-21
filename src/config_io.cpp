@@ -177,17 +177,4 @@ namespace porto
 		}
 		//in.close();
 	}
-	
-
-	void debug_init_scene(Raytracer &engine)
-	{
-		engine.scene->add(std::make_shared<Sphere>(0, 0, 5, 0.9f));
-		return;
-
-		for(float a = 0; a<5;a++)
-			for(float b = 0; b<5; b++)
-			{
-				engine.scene->add(std::make_shared<Sphere>(-float(-5+2*a), -float(-5+2*b), 2+(a+b)/2, 0.9f) );
-			}
-	}
 }

@@ -12,10 +12,20 @@ namespace porto
 		return rand_generator();
 	}
 
-	Vec3 random_unit_vector() {
-		auto a = random_double(0, 2*pi);
-		auto z = random_double(-1, 1);
-		auto r = sqrt(1 - z*z);
-		return Vec3(r*cos(a), r*sin(a), z);
+	// Vec3 random_unit_vector() {
+	// 	double costheta = random_double(-1,1);
+	// 	double cosphi = random_double(-1, 1);
+	// 	double sintheta
+	// 	auto phi = random_double(0, 2*pi);
+	// 	return Vec3(cos(theta)*cos(phi), sin(theta)*cos(phi), sin(phi));
+	// }
+
+	Vec3 random_unit_vector()
+	{
+		Vec3 p;
+		do {
+			p = 2.0f * Vec3(random_double(0, 1), random_double(0, 1), random_double(0, 1)) - Vec3(1.0f, 1.0f, 1.0f);
+		} while (p.squared_length() >= 1.0f);
+		return p;
 	}
 }
