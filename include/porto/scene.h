@@ -15,7 +15,6 @@ namespace porto
         size_t size() {return v.size();}
         void add(std::shared_ptr<IHittable> object);
         virtual bool hit(const Ray &ray, double t_min, double t_max, HitRecord& record) const;
-        virtual Scene* clone() const;
         ~Scene();
     };
 }

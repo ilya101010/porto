@@ -24,7 +24,6 @@ namespace porto
 		}
 
 		virtual bool hit(const Ray &ray, double t_min, double t_max, HitRecord& record) const;
-		virtual Sphere* clone() const;
 		~Sphere() {}
 	};
 }

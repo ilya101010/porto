@@ -23,8 +23,8 @@ namespace porto
 		}
 		Vec3 unit_direction = r.dir();
 		double t = 0.5*(unit_direction.y + 1.0);
-		//return Vec3(0.0, 0.0, 0.0);
-		return (1.0-t)*Vec3(1.0, 1.0, 1.0) + t*Vec3(0.5, 0.7, 1.0);
+		return Vec3(0.0, 0.0, 0.0);
+		//return ((1.0-t)*Vec3(1.0, 1.0, 1.0) + t*Vec3(0.5, 0.7, 1.0))/10;
 		//std::cerr << "CEnd";
 	}
 
@@ -43,7 +43,7 @@ namespace porto
 
 	Vec3 Raytracer::getPixel(int x, int y)
 	{
-		int ns = 100;
+		int ns = 400;
 		Vec3 col(0, 0, 0);
 		for (int s = 0; s < ns; s++) {
 			double u = double(x + random_double()) / double(width);

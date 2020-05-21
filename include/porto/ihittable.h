@@ -14,6 +14,7 @@ namespace porto
 		Vec3 p;
 		Vec3 normal;
 		std::shared_ptr<Material> mat_ptr;
+		double u, v;
 		bool front_face;
 
 		inline void set_face_normal(const Ray& r, const Vec3& out_normal) {
@@ -27,7 +28,6 @@ namespace porto
 	public:
 		virtual bool hit
 			(const Ray &ray, double t_min, double t_max, HitRecord& record) const = 0;
-		virtual IHittable* clone() const = 0;
 		virtual ~IHittable() {};
 	};
 }
