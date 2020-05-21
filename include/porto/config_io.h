@@ -15,5 +15,7 @@ namespace porto
 {
     void write_hard_configs(const char * filename);
 
-    void read_configs(std::vector< std::shared_ptr < porto::Camera > > &cameras, std::shared_ptr < Scene > & scene, std::istream & in);   
+    void read_configs(std::vector< std::shared_ptr < porto::Camera > > &cameras, std::shared_ptr < Scene > & scene, std::istream & in);
+
+    void debug_init_scene(Raytracer &engine);
 }

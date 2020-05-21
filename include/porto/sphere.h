@@ -16,10 +16,12 @@ namespace porto
 		std::shared_ptr<Material> mat_ptr;
 		
 		Sphere(const Vec3 &center, double radius, std::shared_ptr<Material> material_ptr) : c{center}, r{radius}, mat_ptr{material_ptr} {}
-		/*Sphere(double x, double y, double z, double radius) : c{x,y,z}, r{radius}
+		
+		// for debug
+		Sphere(double x, double y, double z, double radius) : c{x,y,z}, r{radius}
 		{
 			mat_ptr = std::make_shared<Lambertian>(Vec3(random_double(),random_double(),random_double()));
-		}*/
+		}
 
 		virtual bool hit(const Ray &ray, double t_min, double t_max, HitRecord& record) const;
 		virtual Sphere* clone() const;
