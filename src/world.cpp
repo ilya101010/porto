@@ -3,13 +3,25 @@
 #include <fstream>
 #include <cstdio>
 #include <assert.h>
+#include <porto/scene.h>
+#include <porto/camera.h>
+
+static bool debug = false; 
 
 porto::World::World(int argc, char *argv[]) : mpi_unit{argc, argv}
 {
     if (argc >= 1) {
-        conf_file.open(argv[1]);
-        if (conf_file.is_open())
+        if(strcmp(argv[1], "-debug") == 0)
+        {
+            debug = true;
             return;
+        }
+        else
+        {
+            conf_file.open(argv[1]);
+            if (conf_file.is_open())
+                return;
+        }
     }
     if (getrank()==0)
         fprintf(stderr, "Please, use\n mpirun -np 8 ./porto configs/conf.json\n");
@@ -28,9 +40,19 @@ porto::World::World(int argc, char *argv[]) : mpi_unit{argc, argv}
 
 int porto::World::init()
 {
-    read_configs(cameras, scene, conf_file);
-    for (auto cam : cameras){
-        engines.push_back({scene, cam});
+    if(!debug)
+    {
+        read_configs(cameras, scene, conf_file);
+        for (auto cam : cameras){
+            engines.push_back({scene, cam});
+        }
+    }
+    else
+    {
+        Scene _s();
+        Raytracer _e(std::make_shared<Scene>(), std::make_shared<Camera>(90, 500, 500, 500, 500, 25, 10, "/dev/stdout", Vec3(0,0,0), Vec3(1,0,0), Vec3(0,1,0)));
+        debug_init_scene(_e);
+        engines.push_back(_e);
     }
     return 0;
 }
@@ -45,6 +67,7 @@ int porto::World::run()
     }
     return 0;
 }
+
 porto::World::~World(){
     conf_file.close();
 }
