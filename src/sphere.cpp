@@ -1,11 +1,6 @@
 #include <porto/sphere.h>
 #include <porto/ihittable.h>
 
-
-porto::Sphere* porto::Sphere::clone() const{
-	return new porto::Sphere(*this);
-}
-
 bool porto::Sphere::hit
 	(const Ray &ray, double t_min, double t_max, HitRecord& record) const
 {

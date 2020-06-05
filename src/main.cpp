@@ -13,12 +13,9 @@
 #include <cstdio>
 #include <unistd.h>
 #include <porto/mpi_unit.h>
-#include <json.hpp>
 #include <porto/config_io.h>
 #include <porto/world.h>
 namespace p = porto;
-
-using json = nlohmann::json;
 
 
 int main(int argc, char *argv[])

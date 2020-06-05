@@ -10,32 +10,32 @@ static bool debug = false;
 
 porto::World::World(int argc, char *argv[]) : mpi_unit{argc, argv}
 {
-    if (argc >= 1) {
-        if(strcmp(argv[1], "-debug") == 0)
-        {
-            debug = true;
-            return;
-        }
-        else
-        {
-            conf_file.open(argv[1]);
-            if (conf_file.is_open())
-                return;
-        }
-    }
-    if (getrank()==0)
-        fprintf(stderr, "Please, use\n mpirun -np 8 ./porto configs/conf.json\n");
-    status = BAD_INPUT;
-    //problems with paralell dialog
-    /*for (;;) {
-        std::cout << "\nType path to configuration file or press Ctrl + D\n>>> ";
-        if (std::cin.eof()) return;
-        std::string f;
-        std::cin >> f;
-        conf_file.open(f.c_str());
-        if (conf_file.is_open())
-            return;
-    }*/
+	if (argc >= 1) {
+		if(strcmp(argv[1], "-debug") == 0)
+		{
+			debug = true;
+			return;
+		}
+		else
+		{
+			conf_file.open(argv[1]);
+			if (conf_file.is_open())
+				return;
+		}
+	}
+	if (getrank()==0)
+		fprintf(stderr, "Please, use\n mpirun -np 8 ./porto configs/conf.json\n");
+	status = BAD_INPUT;
+	//problems with paralell dialog
+	/*for (;;) {
+		std::cout << "\nType path to configuration file or press Ctrl + D\n>>> ";
+		if (std::cin.eof()) return;
+		std::string f;
+		std::cin >> f;
+		conf_file.open(f.c_str());
+		if (conf_file.is_open())
+			return;
+	}*/
 }
 
 int porto::World::init()
@@ -69,5 +69,5 @@ int porto::World::run()
 }
 
 porto::World::~World(){
-    conf_file.close();
+	conf_file.close();
 }
